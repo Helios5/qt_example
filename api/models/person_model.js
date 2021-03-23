@@ -10,7 +10,7 @@ const person = {
   add: function(person, callback) {
     return db.query(
       'insert into person (f_name,l_name,money) values(?,?,?)',
-      [person.f_name, person.author, person.money],
+      [person.f_name, person.l_name, person.money],
       callback
     );
   },
@@ -19,10 +19,17 @@ const person = {
   },
   update: function(id, person, callback) {
     return db.query(
-      'update person set f_name=?,author=?, money=? where id_person=?',
-      [person.f_name, person.author, person.money, id],
+      'update person set f_name=?,l_name=?, money=? where id_person=?',
+      [person.f_name, person.l_name, person.money, id],
       callback
     );
-  }
+  },
+  moneyAction: function(procedure_params, callback) {
+    return db.query(
+      'CALL money_action (?,?)',
+      [procedure_params.id, procedure_params.amount],
+      callback
+    );
+  },  
 };
 module.exports = person;
